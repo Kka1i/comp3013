@@ -3,12 +3,12 @@ import { Assignments } from "./components/Assignments";
 import { useState } from "react";
 
 function App() {
-  const [assignments, setAssignments] = useState<string[]>([]);
+  const [assignments, setAssignments] = useState<{ content: string; deadline?: Date }[]>([]);
   const [checkedCount, setCheckedCount] = useState<number>(0);
   const [ifChecked, setIfChecked] = useState<boolean[]>([]);
 
-  const handleAddAssignment = (assignment: string) => {
-    setAssignments([...assignments, assignment]);
+  const handleAddAssignment = (assignment: string, deadline?: Date) => {
+    setAssignments([...assignments, { content: assignment, deadline }]);
     setIfChecked([...ifChecked, false]);
   };
 
@@ -24,20 +24,14 @@ function App() {
 
   const handleCheckAssignment = (index: number, checked: boolean) => {
     setCheckedCount(!checked ? checkedCount + 1 : checkedCount - 1);
-    console.log(checked);
-    if(checked) {
+    if (checked) {
       const tempIfCheck = [...ifChecked];
       tempIfCheck[index] = !checked;
       setIfChecked(tempIfCheck);
-      console.log(11111);
-      console.log(ifChecked)
-    }
-    else {
+    } else {
       const tempIfCheck = [...ifChecked];
       tempIfCheck[index] = !checked;
       setIfChecked(tempIfCheck);
-      console.log(222222);
-      console.log(ifChecked)
     }
   };
 
@@ -49,7 +43,7 @@ function App() {
         onDeleteAssignment={handleDeleteAssignment}
         onCheckAssignment={handleCheckAssignment}
         checkedCount={checkedCount}
-        ifChecked = {ifChecked}
+        ifChecked={ifChecked}
       />
     </>
   );
